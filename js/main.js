@@ -5,6 +5,15 @@ var fsClientSecret = 'G1PXX505FRIJOT2RA3MHYCH3FW5D2EJ0GSYGNZSRNJJZHRZE';
 var fsAPIURL = 'https://api.foursquare.com/v2/venues/';
 var map, responseObj;
 
+//initialize everything via the callback function in the google url in index.html
+function initMap() {
+	ko.applyBindings(new ViewModel());
+}
+
+function failure() {
+	alert("Google Maps has failed to load! Please check your connection and try again.");
+}
+
 // Object literal of places for Foursquare to look for
 var googleLocations = [
         {id: '51d8393dccdaed04cc926abf', place: 'Hansa Coffee Roasters', location:{ lat: 42.29115154366042, lng: -87.95615673065186}},
@@ -67,6 +76,7 @@ var Location = function(array) {
 	});
 	
 	// Function to make custom markers, simply pass in a color.
+	// Taken from the Google Maps API course
 	function makeMarkerIcon(markerColor) {
         var markerImage = new google.maps.MarkerImage(
           'https://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
@@ -133,6 +143,7 @@ function ViewModel() {
 	if it is not -1 (which means doesn't exist), then return that index.
 	And make sure it is visible by passing in visible as true to that index.
 	If no filter is applied then show everything.
+	Used this tutorial for inspiration: http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
 	*/
 	this.filteredLocations = ko.computed( function() {
 		var filter = self.query().toLowerCase();
@@ -149,13 +160,4 @@ function ViewModel() {
 			});
 		}
 	}, self);
-}
-
-//initialize everything via the callback function in the google url in index.html
-function initMap() {
-	ko.applyBindings(new ViewModel());
-}
-
-function failure() {
-	alert("Google Maps has failed to load! Please check your connection and try again.");
 }
