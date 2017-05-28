@@ -32,6 +32,7 @@
 	<link rel="stylesheet" href="css/styles.css" type="text/css" />
 </head>
 <body>
+	<header><span class="left">A David DeWulf Project</span><span class="right">Built using Foursquare and Google Maps</span></header>
 	<div class="container-full">
 		<div class="navbar">
 			<div class="navbar navbar-brand navbar-right title">
@@ -42,17 +43,17 @@
 					<li class="dropdown">
 						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Places<b class="caret"></b></a>
 						<ul class="dropdown-menu nav navbar-left places-list" data-bind="foreach: filteredLocations">
-							<li><span data-bind="text: place, click: showInfo">
+							<li><span data-bind="text: place, click: showInfo"></span></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
-		</div>
 		<div class="row">
-			<div id="map"></div>
+			<div id="map">If you are reading this then something has gone wrong!</div>
 		</div>
 	</div>
-<script src="js/main.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMq1l61aFl1gjVcJVjv11Z8ByM6uv6WfY&callback=initMap"></script>
+
+	<script src="js/main.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMq1l61aFl1gjVcJVjv11Z8ByM6uv6WfY&callback=initMap" onerror="failure()"></script>
 </body>
 </html>

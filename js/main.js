@@ -5,7 +5,7 @@ var fsClientSecret = 'G1PXX505FRIJOT2RA3MHYCH3FW5D2EJ0GSYGNZSRNJJZHRZE';
 var fsAPIURL = 'https://api.foursquare.com/v2/venues/';
 var map, responseObj;
 
-
+// Object literal of places for Foursquare to look for
 var googleLocations = [
         {id: '51d8393dccdaed04cc926abf', place: 'Hansa Coffee Roasters', location:{ lat: 42.29115154366042, lng: -87.95615673065186}},
         {id: '4ada739ef964a520b32221e3', place: 'Firkin', location:{ lat: 42.28814872365874, lng: -87.95469992982228}},
@@ -35,7 +35,6 @@ var Location = function(array) {
 	this.lat = array.location.lat;
 	this.lng = array.location.lng;
 	this.visible = ko.observable(true);
-	
 	this.infoWindow = new google.maps.InfoWindow({
 		content: self.infoContent,
 	});
@@ -49,7 +48,7 @@ var Location = function(array) {
     		responseObj = data.response.venue;
     		self.infoWindow.setContent('<div class="map-marker">'+
 			'<h4>' + self.place + '</h4>' + 
-    		'<div>'+ responseObj.tips.groups[0].items[0].text + '</div><br>' +	
+    		'<div><strong>Top Tip:</strong><em> '+ responseObj.tips.groups[0].items[0].text + '</em></div><br>' +	
     		'<div><a href="' + responseObj.url + '">Website</a></div></div>');
     		
 	    },
@@ -92,13 +91,11 @@ var Location = function(array) {
 		return true;
 	}, this);
 	
-	
 	// Add listeners to each marker
 	this.marker.addListener('mouseover', function() {
 		this.setIcon(makeMarkerIcon('FFFF24'));
 		});
     this.marker.addListener('click', function() {
-    	self.toggleBounce(self);
 		self.infoWindow.open(map, this);
 		});
 	this.marker.addListener('closeclick', function() {
@@ -112,8 +109,6 @@ var Location = function(array) {
 	this.showInfo = function(){
 		self.infoWindow.open(map, self.marker);
 	};
-	
-	
 };
 
 function ViewModel() {
@@ -121,16 +116,19 @@ function ViewModel() {
 	// Our query value which pulls from the index.html
 	this.query = ko.observable('');
 	this.locationList = ko.observableArray([]);
+	
 	// Initialize that map, son!
 	map = new google.maps.Map(document.getElementById('map'), {
 			center: {lat: 42.2937382, lng: -87.9544573},
 			zoom: 14,
 			mapTypeControl: false
 	});
+	
 	// For each item in the initial array, add it to the KO observable array
 	googleLocations.forEach(function(locationItem){
 		self.locationList.push(new Location(locationItem));
 	});
+	
 	/* Search for the index of the search once converted to lowercase,
 	if it is not -1 (which means doesn't exist), then return that index.
 	And make sure it is visible by passing in visible as true to that index.
@@ -152,7 +150,12 @@ function ViewModel() {
 		}
 	}, self);
 }
+
 //initialize everything via the callback function in the google url in index.html
 function initMap() {
 	ko.applyBindings(new ViewModel());
+}
+
+function failure() {
+	alert("Google Maps has failed to load! Please check your connection and try again.");
 }

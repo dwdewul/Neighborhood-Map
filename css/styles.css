@@ -8,6 +8,23 @@ html, body .container-full, #map, .row, #places-list{
     width: 100%;
 }
 
+header{
+    background-color: lightblue;
+    height: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 4px;
+}
+
+.left{
+    float: left;
+    padding-left: 10px
+}
+
+.right{
+    float: right;
+    padding-right: 10px;
+}
+
 .navbar{
     margin: auto;
 }
