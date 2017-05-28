@@ -1,0 +1,40 @@
+html, body .container-full, #map, .row, #places-list{
+    font-family: 'Ubuntu', sans-serif;
+    height: 100%;
+    width: 100%;
+    background-color: lightgray;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.navbar{
+    margin: auto;
+}
+
+.places-list{
+    text-align: center;
+
+}
+
+.form-control{
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+#map{
+    position: absolute;
+    border-radius: 7px;
+}
+
+.title {
+    font-size: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.navbar {
+    background-color: lightyellow;
+}
