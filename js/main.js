@@ -2,8 +2,9 @@
 
 var fsClientID = 'INOUGJOA45T5I0ZFKBGQTPXEUZGBWWF2HK14KYIYYQRJVJD0';
 var fsClientSecret = 'G1PXX505FRIJOT2RA3MHYCH3FW5D2EJ0GSYGNZSRNJJZHRZE';
-var fsAPIURL = 'https://api.foursquare.com/v2/venues/';
-var map, responseObj;
+var fsAPIURL = 'https://api.foursquare.com/v2/';
+var fsAPIURLParam = 'venues/';
+var map, responseObj, infoWindows =[], markers=[];
 
 //initialize everything via the callback function in the google url in index.html
 function initMap() {
@@ -50,19 +51,20 @@ var Location = function(array) {
 	
 	// Ajax call to get the data from FourSquare.
 	$.ajax({
-		url: fsAPIURL + self.id +'?v=20131016&client_id=' + fsClientID + '&client_secret=' + fsClientSecret,
+		url: fsAPIURL + fsAPIURLParam+ self.id +'?v=20131016&client_id=' + fsClientID + '&client_secret=' + fsClientSecret,
 	    type: "GET",
 	    dataType: "json",
 	    success: function(data){
     		responseObj = data.response.venue;
+    		var url = responseObj.canonicalUrl || '';
     		self.infoWindow.setContent('<div class="map-marker">'+
 			'<h4>' + self.place + '</h4>' + 
     		'<div><strong>Top Tip:</strong><em> '+ responseObj.tips.groups[0].items[0].text + '</em></div><br>' +	
-    		'<div><a href="' + responseObj.url + '">Website</a></div></div>');
+    		'<div><a href="' + url +'">'+ self.place + '</a></div></div>');
     		
 	    },
         error: function(error) {
-		    console.log("There was an error " + error);
+		    alert("There was an error loading the Foursquare data, please try again!");
         }
 	});
 
@@ -88,6 +90,20 @@ var Location = function(array) {
         return markerImage;
       }
       
+    /* Function to coordinate multiple markers and only show one marker
+    animation and one infoWindow at a time
+    */
+    function markerAnimation(){
+    	for(var i = 0; i < infoWindows.length; i++){
+    		infoWindows[i].close(map);
+    	}
+		self.marker.setAnimation(google.maps.Animation.BOUNCE);
+    	self.marker.setIcon(makeMarkerIcon('FFFF24'));
+    	setTimeout(function(){self.marker.setAnimation(null);}, 1450);
+    	setTimeout(function(){self.marker.setIcon(makeMarkerIcon('F000F9'))}, 1450);
+    }
+      
+      
 	/* Show the marker if visible is set to true,
 	otherwise, take it off the map by setting
 	the marker to null on the map.
@@ -102,22 +118,21 @@ var Location = function(array) {
 	}, this);
 	
 	// Add listeners to each marker
-	this.marker.addListener('mouseover', function() {
-		this.setIcon(makeMarkerIcon('FFFF24'));
-		});
     this.marker.addListener('click', function() {
+    	markerAnimation();
 		self.infoWindow.open(map, this);
+		infoWindows.push(self.infoWindow);
 		});
+		
 	this.marker.addListener('closeclick', function() {
-		this.setIcon(makeMarkerIcon('F000F9'));
 		self.infoWindow.close(map, this);
 		});
-    this.marker.addListener('mouseout', function() {
-		this.setIcon(makeMarkerIcon('F000F9'));
-		});
+		
 	// Open the respective info window when the list item is clicked.	
 	this.showInfo = function(){
+		markerAnimation();
 		self.infoWindow.open(map, self.marker);
+		infoWindows.push(self.infoWindow);
 	};
 };
 

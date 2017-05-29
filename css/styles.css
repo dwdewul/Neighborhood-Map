@@ -1,5 +1,10 @@
-html, body .container-full, #map, .row, #places-list{
-    font-family: 'Ubuntu', sans-serif;
+html,
+body,
+.container-full,
+#map,
+.row,
+#places-list {
+    font-family: "Ubuntu", sans-serif;
     height: 100%;
     width: 100%;
     background-color: lightgray;
@@ -8,39 +13,39 @@ html, body .container-full, #map, .row, #places-list{
     width: 100%;
 }
 
-header{
+header {
     background-color: lightblue;
     height: 20px;
     font-family: 'Ubuntu', sans-serif;
     border-radius: 4px;
 }
 
-.left{
+.left {
     float: left;
     padding-left: 10px
 }
 
-.right{
+.right {
     float: right;
     padding-right: 10px;
 }
 
-.navbar{
+.navbar {
     margin: auto;
 }
 
-.places-list{
+.places-list {
     text-align: center;
 
 }
 
-.form-control{
+.form-control {
     width: 90%;
     margin: auto;
     text-align: center;
 }
 
-#map{
+#map {
     position: absolute;
     border-radius: 7px;
 }
@@ -54,4 +59,8 @@ header{
 
 .navbar {
     background-color: lightyellow;
+}
+
+header a {
+    color: white;
 }
