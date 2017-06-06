@@ -1,16 +1,17 @@
 html,
-body,
-.container-full,
-#map,
-.row,
-#places-list {
-    font-family: "Ubuntu", sans-serif;
+body {
     height: 100%;
+}
+
+.row,
+.container-full {
+    font-family: "Ubuntu", sans-serif;
+    height: 100vh;
     width: 100%;
     background-color: lightgray;
     text-align: center;
     margin: 0 auto;
-    width: 100%;
+    padding: 0;
 }
 
 header {
@@ -46,8 +47,8 @@ header {
 }
 
 #map {
-    position: absolute;
-    border-radius: 7px;
+    height: 89%;
+    width: 100%;
 }
 
 .title {
@@ -59,6 +60,10 @@ header {
 
 .navbar {
     background-color: lightyellow;
+}
+
+.navbar .search-custom {
+    align-items: center;
 }
 
 header a {
